@@ -11,10 +11,10 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.forms.widgets import Textarea as TextareaWidget
 
-from rest_framework.fields import Field
+from rest_framework.fields import DictField
 
 
-class GeometryField(Field):
+class GeometryField(DictField):
     """
     A field to handle GeoDjango Geometry fields
     """
