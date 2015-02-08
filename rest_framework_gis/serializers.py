@@ -24,7 +24,7 @@ class GeoModelSerializer(ModelSerializer):
     for GeoDjango fields to be serialized as GeoJSON
     compatible data
     """
-    field_mapping = MapGeometryField(ModelSerializer.field_mapping)
+    field_mapping = MapGeometryField(ModelSerializer._field_mapping)
 
 
 class GeoFeatureModelSerializer(GeoModelSerializer):
