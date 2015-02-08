@@ -1,7 +1,7 @@
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.gis.db.models.fields import GeometryField as django_GeometryField
 
-from rest_framework.serializers import ModelSerializer, ModelSerializerOptions
+from rest_framework.serializers import ModelSerializer
 
 from .fields import GeometryField
 
@@ -27,25 +27,12 @@ class GeoModelSerializer(ModelSerializer):
     field_mapping = MapGeometryField(ModelSerializer.field_mapping)
 
 
-class GeoFeatureModelSerializerOptions(ModelSerializerOptions):
-    """
-    Options for GeoFeatureModelSerializer
-    """
-    def __init__(self, meta):
-        super(GeoFeatureModelSerializerOptions, self).__init__(meta)
-        self.geo_field = getattr(meta, 'geo_field', None)
-        # id field defaults to primary key of the model
-        self.id_field = getattr(meta, 'id_field', meta.model._meta.pk.name)
-
-
 class GeoFeatureModelSerializer(GeoModelSerializer):
     """
     A subclass of GeoModelSerializer
     that outputs geojson-ready data as
     features and feature collections
     """
-    _options_class = GeoFeatureModelSerializerOptions
-
     def __init__(self, *args, **kwargs):
         super(GeoFeatureModelSerializer, self).__init__(*args, **kwargs)
         if self.opts.geo_field is None:
